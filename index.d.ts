@@ -1,6 +1,7 @@
 import { Definitions } from 'bpmn-moddle';
 
 declare class Viewer {
+    constructor(options: ViewerOptions);
     /**
      * Parse and render a BPMN 2.0 diagram.
      *
@@ -207,6 +208,15 @@ declare class Viewer {
     public detach(): void;
 }
 
+declare namespace didi {
+    export interface ContextPadProvider {
+        $inject: string[];
+    }
+    export interface Module {
+        contextPadProvider: [string, ContextPadProvider];
+    }
+}
+
 declare interface ViewerOptions {
     // the container to render the viewer in, defaults to body.
     container?: HTMLElement;
@@ -221,10 +231,14 @@ declare interface ViewerOptions {
     moddleExtensions?: object;
 
     // {Array<didi.Module>}, a list of modules to override the default modules
-    modules?: any[];
+    modules?: didi.Module[];
 
     //{Array<didi.Module>}, a list of modules to use with the default modules
-    additionalModules?: any[];
+    additionalModules?: didi.Module[];
+
+    keyboard?: {
+        bindTo?: Window | Document | HTMLElement;
+    }
 }
 
 declare interface SaveSVGOptions {}
