@@ -1,6 +1,6 @@
 import {BaseElement, Definitions, Moddle} from 'bpmn-moddle';
 
-declare class Viewer {
+export declare class Viewer {
   constructor(options: ViewerOptions);
 
   /**
@@ -216,7 +216,7 @@ declare class Viewer {
   public detach(): void;
 }
 
-declare namespace didi {
+export declare namespace didi {
   export interface ContextPadProvider {
     $inject: string[];
   }
@@ -226,7 +226,7 @@ declare namespace didi {
   }
 }
 
-declare namespace djs {
+export declare namespace djs {
   export namespace model {
     export interface Base {
       id: string;
@@ -264,7 +264,7 @@ declare namespace djs {
   }
 }
 
-declare interface ViewerOptions {
+export declare interface ViewerOptions {
   // the container to render the viewer in, defaults to body.
   container?: HTMLElement;
 
@@ -302,14 +302,14 @@ declare interface ViewerOptions {
   }
 }
 
-declare interface SaveSVGOptions {
+export declare interface SaveSVGOptions {
 }
 
-declare interface SaveSVGResult {
+export declare interface SaveSVGResult {
   svg: string;
 }
 
-declare interface SaveXMLOptions {
+export declare interface SaveXMLOptions {
   // output formatted XML
   format?: boolean;
 
@@ -317,45 +317,45 @@ declare interface SaveXMLOptions {
   preamble?: boolean;
 }
 
-declare interface SaveXMLResult {
+export declare interface SaveXMLResult {
   xml: string;
 }
 
-declare interface OpenResult {
+export declare interface OpenResult {
   warnings: string[];
 }
 
-declare interface OpenError {
+export declare interface OpenError {
   warnings: string[];
 }
 
-declare interface BPMNDiagram {
+export declare interface BPMNDiagram {
 }
 
-declare interface ModdleElement<T> extends BaseElement {
+export declare interface ModdleElement<T> extends BaseElement {
 }
 
-declare interface ImportDefinitionsResult {
+export declare interface ImportDefinitionsResult {
   warnings: string[];
 }
 
-declare interface ImportDefinitionsError {
+export declare interface ImportDefinitionsError {
   warnings: string[];
 }
 
-declare interface ImportXMLResult {
+export declare interface ImportXMLResult {
   warnings: string[];
 }
 
-declare interface ImportXMLError {
+export declare interface ImportXMLError {
   warnings: string[];
 }
 
-declare interface InternalEventImpl {
+export declare interface InternalEventImpl {
   type: string;
 }
 
-declare interface InternalEvent extends InternalEventImpl {
+export declare interface InternalEvent extends InternalEventImpl {
   stopPropagation(): void;
 
   preventDefault(): void;
@@ -616,9 +616,9 @@ declare type EvtName =
   | "canvas.resized"
   | "import.parse.complete"
 
-declare type EventCallback = (event: InternalEvent) => void;
+export declare type EventCallback = (event: InternalEvent) => void;
 
-declare interface EventBus {
+export declare interface EventBus {
   createEvent(data: InternalEventImpl): InternalEvent;
 
   fire(type: InternalEventImpl | string, data: InternalEventImpl | InternalEvent): boolean;
@@ -640,7 +640,7 @@ declare interface EventBus {
   handleError(error: Error): void;
 }
 
-declare interface ElementRegistry {
+export declare interface ElementRegistry {
   new(eventBus: EventBus): ElementRegistry;
 
   add(element: djs.model.Base, gfx: SVGElement, secondaryGfx?: SVGElement): void;
@@ -664,7 +664,7 @@ declare interface ElementRegistry {
   updateId(element: djs.model.Base, newId: string): void;
 }
 
-declare class Canvas {
+export declare class Canvas {
   /**
    * Returns the default layer on which
    * all elements are drawn.
@@ -981,38 +981,38 @@ declare class Canvas {
 
 declare type DOMNode = any;
 
-declare interface CanvasViewBoxOps {
+export declare interface CanvasViewBoxOps {
   x: number;
   y: number;
   width: number;
   height: number;
 }
 
-declare interface CanvasScrollDelta {
+export declare interface CanvasScrollDelta {
   dx?: number;
   dy?: number;
 }
 
-declare interface CanvasZoomPoint {
+export declare interface CanvasZoomPoint {
   x: number;
   y: number;
 }
 
-declare interface Dimensions {
+export declare interface Dimensions {
   width: number;
   height: number;
 }
 
-declare interface Bounds {
+export declare interface Bounds {
   x: number;
   y: number;
   width: number;
   height: number;
 }
 
-declare type ElementDescriptor = any;
+export declare type ElementDescriptor = any;
 
-declare class CommandStack {
+export declare class CommandStack {
   public static $inject: ['eventBus', 'injector'];
 
   /**
@@ -1082,9 +1082,9 @@ declare class CommandStack {
   public canRedo(): boolean;
 }
 
-declare type CommandHandler = (...args: any[]) => void;
+export declare type CommandHandler = (...args: any[]) => void;
 
-declare class ContextPad {
+export declare class ContextPad {
   /**
    * Close the context pad
    */
@@ -1180,49 +1180,49 @@ declare class ContextPad {
 }
 
 
-declare interface ContextPadTarget {
+export declare interface ContextPadTarget {
 }
 
-declare interface ContextPadEntryDescriptor {
+export declare interface ContextPadEntryDescriptor {
 }
 
-declare interface ContextPadProvider {
+export declare interface ContextPadProvider {
   getContextPadEntries(element: any): any;
 
   getMultiElementContextPadEntries(elements: any): any;
 }
 
-declare interface OverlayShowConfiguration {
+export declare interface OverlayShowConfiguration {
   minZoom?: number;
   maxZoom?: number;
 }
 
-declare interface OverlayPositionConfiguration {
+export declare interface OverlayPositionConfiguration {
   left?: number;
   top?: number;
   bottom?: number;
   right?: number;
 }
 
-declare interface OverlayScaleConfiguration {
+export declare interface OverlayScaleConfiguration {
   min?: number;
   max: number;
 }
 
-declare interface Overlay {
+export declare interface Overlay {
   show?: OverlayShowConfiguration;
   position?: OverlayPositionConfiguration;
   scale?: boolean | OverlayScaleConfiguration;
   html: string | HTMLElement;
 }
 
-declare interface OverlaySearch {
+export declare interface OverlaySearch {
   id?: string;
   element?: string | djs.model.Base;
   type?: string;
 }
 
-declare class Overlays {
+export declare class Overlays {
   /**
    * Adds a HTML overlay to an element.
    *
