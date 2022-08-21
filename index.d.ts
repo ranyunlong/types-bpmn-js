@@ -1,4 +1,4 @@
-import {BaseElement, Definitions, Moddle} from 'bpmn-moddle';
+import {BaseElement, Definitions, Point} from 'bpmn-moddle';
 
 export declare class Viewer {
   constructor(options: ViewerOptions);
@@ -134,6 +134,7 @@ export declare class Viewer {
   public get(name: 'canvas'): Canvas;
   public get(name: 'commandStack'): CommandStack;
   public get(name: 'contextPad'): ContextPad;
+  public get(name: 'copyPaste'): CopyPaste;
   public get(name: 'modeling'): any;
   public get(name: 'palette'): any;
   public get(name: string): any;
@@ -1288,6 +1289,73 @@ export declare class Overlays {
 
 
   public get(search: OverlaySearch): object | object[];
+}
+
+export declare class CopyPaste {
+  /**
+   * Copy elements.
+   *
+   * @param {Array<djs.model.Base>} elements
+   *
+   * @returns {Object}
+   */
+   public copy(elements: djs.model.Base[]): object;
+
+  /**
+   * Paste elements.
+   *
+   * @param {Object} [context]
+   * @param {djs.model.base} [context.element] - Parent.
+   * @param {Point} [context.point] - Position.
+   * @param {Object} [context.hints] - Hints.
+   */
+   public paste(context?: CopyPasteContext): void;
+
+  /**
+   * Check wether element has relations to other elements e.g. attachers, labels and connections.
+   *
+   * @param  {Object} element
+   * @param  {Array<djs.model.Base>} elements
+   *
+   * @returns {boolean}
+   */
+   public hasRelations(element: object, elements: djs.model.Base[]): boolean;
+
+  /**
+   * Create a tree-like structure from elements.
+   *
+   * @example
+   * tree: {
+   *  0: [
+   *    { id: 'Shape_1', priority: 1, ... },
+   *    { id: 'Shape_2', priority: 1, ... },
+   *    { id: 'Connection_1', source: 'Shape_1', target: 'Shape_2', priority: 3, ... },
+   *    ...
+   *  ],
+   *  1: [
+   *    { id: 'Shape_3', parent: 'Shape1', priority: 1, ... },
+   *    ...
+   *  ]
+   * };
+   *
+   * @param  {Array<djs.model.base>} elements
+   *
+   * @return {Object}
+   */
+   public createTree(elements: djs.model.Base[]): object;
+
+
+   public createConnection(attrs: any[]): djs.model.Connection;
+
+   public createLabel(attrs: any[]): any;
+
+   public createShape(attrs: any[]): djs.model.Shape;
+}
+
+export interface CopyPasteContext {
+  element?: djs.model.Base;
+  point?: Point;
+  hints?: object;
 }
 
 export default Viewer;
