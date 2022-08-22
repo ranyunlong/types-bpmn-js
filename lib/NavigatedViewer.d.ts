@@ -7,11 +7,11 @@ declare class NavigatedViewer extends Viewer {
 }
 
 declare interface CreateDiagramResult {
-  warnings: string[];
+  warnings: Array<string| ErrorWarning>;
 }
 
 declare interface CreateDiagramError {
-  warnings: string[];
+  warnings: Array<string| ErrorWarning>;
 }
 
 export default NavigatedViewer;

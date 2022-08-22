@@ -26,7 +26,7 @@ export declare class Viewer {
    *
    * Returns {Promise<ImportXMLResult, ImportXMLError>}
    */
-  public importXML(xml: string, bpmnDiagram?: string | ModdleElement<BPMNDiagram>): Promise<ImportXMLError | ImportXMLResult>;
+  public importXML(xml: string, bpmnDiagram?: string | ModdleElement<BPMNDiagram>): Promise<ImportXMLResult>;
 
   /**
    * Import parsed definitions and render a BPMN 2.0 diagram.
@@ -48,7 +48,7 @@ export declare class Viewer {
    *
    * Returns {Promise<ImportDefinitionsResult, ImportDefinitionsError>}
    */
-  public importDefinitions(definitions: ModdleElement<Definitions>, bpmnDiagram?: ModdleElement<BPMNDiagram | string>): Promise<ImportDefinitionsResult | ImportDefinitionsError>;
+  public importDefinitions(definitions: ModdleElement<Definitions>, bpmnDiagram?: ModdleElement<BPMNDiagram | string>): Promise<ImportDefinitionsResult>;
 
 
   /**
@@ -70,7 +70,7 @@ export declare class Viewer {
    *
    * Returns {Promise<OpenResult, OpenError>}
    */
-  public open(bpmnDiagramOrId?: ModdleElement<BPMNDiagram> | string): Promise<OpenResult | OpenError>;
+  public open(bpmnDiagramOrId?: ModdleElement<BPMNDiagram> | string): Promise<OpenResult>;
 
   /**
    * Export the currently displayed BPMN 2.0 diagram as
@@ -92,7 +92,7 @@ export declare class Viewer {
    *
    * Returns {Promise<SaveXMLResult, Error>}
    */
-  public saveXML(options?: SaveXMLOptions): Promise<Error | SaveXMLResult>;
+  public saveXML(options?: SaveXMLOptions): Promise<SaveXMLResult>;
 
 
   /**
@@ -112,7 +112,7 @@ export declare class Viewer {
    *
    * Returns {Promise<SaveSVGResult, Error>}
    */
-  public saveSVG(options?: SaveSVGOptions): Promise<SaveSVGResult | Error>;
+  public saveSVG(options?: SaveSVGOptions): Promise<SaveSVGResult>;
 
 
   /**
@@ -323,11 +323,16 @@ export declare interface SaveXMLResult {
 }
 
 export declare interface OpenResult {
-  warnings: string[];
+  warnings: Array<string| ErrorWarning>;
 }
 
 export declare interface OpenError {
-  warnings: string[];
+  warnings: Array<string| ErrorWarning>;
+}
+
+export declare interface ErrorWarning {
+  message: string;
+  error: Error;
 }
 
 export declare interface BPMNDiagram {
@@ -337,19 +342,19 @@ export declare interface ModdleElement<T> extends BaseElement {
 }
 
 export declare interface ImportDefinitionsResult {
-  warnings: string[];
+  warnings: Array<string| ErrorWarning>;
 }
 
 export declare interface ImportDefinitionsError {
-  warnings: string[];
+  warnings: Array<string| ErrorWarning>;
 }
 
 export declare interface ImportXMLResult {
-  warnings: string[];
+  warnings: Array<string| ErrorWarning>;
 }
 
 export declare interface ImportXMLError {
-  warnings: string[];
+  warnings: Array<string| ErrorWarning>;
 }
 
 export declare interface InternalEventImpl {
@@ -735,9 +740,9 @@ export declare class Canvas {
    * Returns the html element that encloses the
    * drawing canvas.
    *
-   * @return {DOMNode}
+   * @return {HTMLElement}
    */
-  public getContainer(): DOMNode;
+  public getContainer(): HTMLElement;
 
   /**
    * Adds a marker to an element (basically a css class).
@@ -979,8 +984,6 @@ export declare class Canvas {
    */
   public resized(): void;
 }
-
-declare type DOMNode = any;
 
 export declare interface CanvasViewBoxOps {
   x: number;

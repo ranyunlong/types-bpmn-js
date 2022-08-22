@@ -1,6 +1,6 @@
 {
   "name": "@types/bpmn-js",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "A bpmn 2.0 toolkit and web modeler",
   "main": "",
   "types": "index.d.ts",
