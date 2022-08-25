@@ -1,4 +1,4 @@
-import {BaseElement, Definitions, Point} from 'bpmn-moddle';
+import {Definitions, Point, BPMNModdle} from 'bpmn-moddle';
 
 export declare class Viewer {
   constructor(options: ViewerOptions);
@@ -131,12 +131,14 @@ export declare class Viewer {
    */
   public get(name: 'eventBus'): EventBus;
   public get(name: 'elementRegistry'): ElementRegistry;
+  public get(name: 'elementFactory'): ElementFactory;
   public get(name: 'canvas'): Canvas;
   public get(name: 'commandStack'): CommandStack;
   public get(name: 'contextPad'): ContextPad;
   public get(name: 'copyPaste'): CopyPaste;
-  public get(name: 'modeling'): any;
+  public get(name: 'modeling'): Modeling;
   public get(name: 'palette'): any;
+  public get(name: 'moddle'): BPMNModdle;
   public get(name: string): any;
 
   /**
@@ -231,7 +233,7 @@ export declare namespace djs {
   export namespace model {
     export interface Base {
       id: string;
-      businessObject: object;
+      businessObject: ModdleElement<any>;
       label: object;
       parent: Shape;
       labels: Label;
@@ -323,11 +325,11 @@ export declare interface SaveXMLResult {
 }
 
 export declare interface OpenResult {
-  warnings: Array<string| ErrorWarning>;
+  warnings: Array<string | ErrorWarning>;
 }
 
 export declare interface OpenError {
-  warnings: Array<string| ErrorWarning>;
+  warnings: Array<string | ErrorWarning>;
 }
 
 export declare interface ErrorWarning {
@@ -338,23 +340,27 @@ export declare interface ErrorWarning {
 export declare interface BPMNDiagram {
 }
 
-export declare interface ModdleElement<T> extends BaseElement {
+export declare interface BaseElement {
+  $type: string;
+  $parent: string;
 }
 
+export declare type ModdleElement<T = Record<string, any>> = BaseElement & T;
+
 export declare interface ImportDefinitionsResult {
-  warnings: Array<string| ErrorWarning>;
+  warnings: Array<string | ErrorWarning>;
 }
 
 export declare interface ImportDefinitionsError {
-  warnings: Array<string| ErrorWarning>;
+  warnings: Array<string | ErrorWarning>;
 }
 
 export declare interface ImportXMLResult {
-  warnings: Array<string| ErrorWarning>;
+  warnings: Array<string | ErrorWarning>;
 }
 
 export declare interface ImportXMLError {
-  warnings: Array<string| ErrorWarning>;
+  warnings: Array<string | ErrorWarning>;
 }
 
 export declare interface InternalEventImpl {
@@ -1302,7 +1308,7 @@ export declare class CopyPaste {
    *
    * @returns {Object}
    */
-   public copy(elements: djs.model.Base[]): object;
+  public copy(elements: djs.model.Base[]): object;
 
   /**
    * Paste elements.
@@ -1312,7 +1318,7 @@ export declare class CopyPaste {
    * @param {Point} [context.point] - Position.
    * @param {Object} [context.hints] - Hints.
    */
-   public paste(context?: CopyPasteContext): void;
+  public paste(context?: CopyPasteContext): void;
 
   /**
    * Check wether element has relations to other elements e.g. attachers, labels and connections.
@@ -1322,7 +1328,7 @@ export declare class CopyPaste {
    *
    * @returns {boolean}
    */
-   public hasRelations(element: object, elements: djs.model.Base[]): boolean;
+  public hasRelations(element: object, elements: djs.model.Base[]): boolean;
 
   /**
    * Create a tree-like structure from elements.
@@ -1345,20 +1351,33 @@ export declare class CopyPaste {
    *
    * @return {Object}
    */
-   public createTree(elements: djs.model.Base[]): object;
+  public createTree(elements: djs.model.Base[]): object;
 
 
-   public createConnection(attrs: any[]): djs.model.Connection;
+  public createConnection(attrs: any[]): djs.model.Connection;
 
-   public createLabel(attrs: any[]): any;
+  public createLabel(attrs: any[]): any;
 
-   public createShape(attrs: any[]): djs.model.Shape;
+  public createShape(attrs: any[]): djs.model.Shape;
 }
 
 export interface CopyPasteContext {
   element?: djs.model.Base;
   point?: Point;
   hints?: object;
+}
+
+export declare class Modeling {
+  public updateProperties(element: djs.model.Base, values: Record<any, any>): void;
+  public removeElements(elements: djs.model.Base[]): void;
+}
+
+export declare class ElementFactory {
+  public createRoot(attrs: Record<string, any>): void;
+  public createLabel(attrs: Record<string, any>): void;
+  public createShape(attrs: Record<string, any>): void;
+  public createConnection(attrs: Record<string, any>): void;
+  public create(type: string, attrs: Record<string, any>): void;
 }
 
 export default Viewer;

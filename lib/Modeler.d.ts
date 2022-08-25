@@ -1,4 +1,4 @@
-import Viewer from "..";
+import Viewer, {ErrorWarning} from "..";
 
 declare class Modeler extends Viewer {
     public static Viewer: Viewer;

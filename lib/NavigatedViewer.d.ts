@@ -1,4 +1,4 @@
-import Viewer from "..";
+import Viewer, {ErrorWarning} from "..";
 
 declare class NavigatedViewer extends Viewer {
   public static Viewer: Viewer;
